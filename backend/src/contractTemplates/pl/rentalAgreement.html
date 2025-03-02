@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Umowa Najmu</title>
+  </head>
+  <body>
+    <h2>Details</h2>
+    <p>Payment Due Day: <%= otherContractData.paymentDueDay %></p>
+
+    <p>Utilities Included: <%= otherContractData.utilitiesIncluded ? 'Yes' : 'No' %></p>
+    <p>Additional Clauses:</p>
+    <ul>
+      <% otherContractData.additionalClauses.forEach(function(clause) { %>
+      <li><%= clause %></li>
+      <% }); %>
+    </ul>
+
+    <h2>Versions</h2>
+    <% versions.forEach(function(version) { %>
+    <div>
+      <p>Start Date: <%= version.startDate %></p>
+      <p>End Date: <%= version.endDate %></p>
+      <p>Rent: <%= version.rent %></p>
+      <p>Deposit: <%= version.deposit %></p>
+      <p>Tenant Name: <%= version.tenantName %></p>
+      <p>Landlord Name: <%= version.landlordName %></p>
+      <p>Version: <%= version.versionNumber %>.<%= version.minorVersion %></p>
+    </div>
+    <% }); %>
+  </body>
+</html>
