@@ -1,0 +1,70 @@
+{
+  "language": "Français",
+  "language_code": "fr",
+  "app_name": "EuroRentals",
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "apartments": "Appartements",
+    "tenants": "Locataires",
+    "contracts": "Contrats",
+    "payments": "Paiements",
+    "documents": "Documents",
+    "settings": "Paramètres",
+    "help": "Aide",
+    "profile": "Profil"
+  },
+  "actions": {
+    "add": "Ajouter",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "view": "Voir",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "clear": "Effacer",
+    "upload": "Télécharger",
+    "download": "Télécharger",
+    "back": "Retour",
+    "next": "Suivant",
+    "submit": "Soumettre",
+    "view_all": "Voir tout",
+    "see_more": "Voir plus",
+    "change_currency": "Changer de devise"
+  },
+  "language": {
+    "change": "Changer de langue"
+  },
+  "edit": "Modifier",
+  "status": {
+    "active": "Actif",
+    "inactive": "Inactif",
+    "pending": "En attente",
+    "completed": "Terminé",
+    "draft": "Brouillon",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "available": "Disponible",
+    "rented": "Loué",
+    "maintenance": "Maintenance"
+  },
+  "currency": {
+    "eur": "Euro (€)",
+    "usd": "Dollar américain ($)",
+    "gbp": "Livre sterling (£)",
+    "chf": "Franc suisse (CHF)",
+    "pln": "Złoty polonais (zł)",
+    "czk": "Couronne tchèque (Kč)",
+    "sek": "Couronne suédoise (kr)",
+    "dkk": "Couronne danoise (kr)",
+    "nok": "Couronne norvégienne (kr)"
+  },
+  "footer": {
+    "copyright": "© {{year}} EuroRentals. Tous droits réservés.",
+    "terms": "Conditions d'utilisation",
+    "privacy": "Politique de confidentialité",
+    "contact": "Contactez-nous"
+  }
+} 
