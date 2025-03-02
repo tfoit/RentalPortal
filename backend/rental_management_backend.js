@@ -20,9 +20,9 @@ cron.schedule("0 0 * * *", () => {
 
 app.use(bodyParser.json());
 
-console.log("Connecting to MongoDB:", process.env.MONGODB_URI);
+console.log("Connecting to MongoDB:", process.env.MAIN_MONGODB_URI || "mongodb://seeyaa:1seeyaa64258spie@localhost:27117/RentalDB?authSource=admin");
 mongoose
-  .connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MAIN_MONGODB_URI || "mongodb://seeyaa:1seeyaa64258spie@localhost:27117/RentalDB?authSource=admin", { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to MongoDB...", err));
 
