@@ -1,0 +1,26 @@
+{
+  "title": "Locataires",
+  "description": "Gérer vos locataires",
+  "filters": {
+    "status": "Statut",
+    "verification": "Vérification",
+    "apartment": "Appartement"
+  },
+  "status": {
+    "active": "Actif",
+    "pending": "En attente",
+    "former": "Ancien"
+  },
+  "verification": {
+    "verified": "Vérifié",
+    "unverified": "Non vérifié"
+  },
+  "actions": {
+    "add_new": "Ajouter",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "view_profile": "Voir le profil",
+    "message": "Message"
+  },
+  "no_results": "Aucun locataire ne correspond à vos filtres"
+} 

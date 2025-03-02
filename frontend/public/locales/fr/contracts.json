@@ -1,0 +1,37 @@
+{
+  "title": "Contrats",
+  "description": "Gérer vos contrats de location",
+  "filters": {
+    "status": "Statut",
+    "date_range": "Période",
+    "tenant": "Locataire",
+    "apartment": "Appartement"
+  },
+  "status": {
+    "active": "Actif",
+    "pending": "En attente",
+    "expired": "Expiré",
+    "draft": "Brouillon",
+    "terminated": "Résilié"
+  },
+  "actions": {
+    "create_new": "Créer",
+    "view": "Voir",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "download": "Télécharger",
+    "print": "Imprimer",
+    "terminate": "Résilier"
+  },
+  "table": {
+    "contract_id": "ID du contrat",
+    "tenant": "Locataire",
+    "apartment": "Appartement",
+    "start_date": "Date de début",
+    "end_date": "Date de fin",
+    "monthly_rent": "Loyer mensuel",
+    "status": "Statut",
+    "actions": "Actions"
+  },
+  "no_results": "Aucun contrat ne correspond à vos filtres"
+} 

@@ -1,6 +1,6 @@
 {
   "title": "Appartements",
-  "subtitle": "Gérez vos propriétés locatives",
+  "description": "Gérer vos appartements et propriétés",
   "list": {
     "empty": "Aucun appartement trouvé",
     "filter": "Filtrer les appartements",
@@ -10,7 +10,10 @@
   },
   "filters": {
     "status": "Statut",
+    "min_price": "Prix Min",
+    "max_price": "Prix Max",
     "location": "Emplacement",
+    "bedrooms": "Chambres",
     "price": "Prix",
     "rooms": "Chambres",
     "area": "Surface",
@@ -28,7 +31,8 @@
   "status": {
     "available": "Disponible",
     "rented": "Loué",
-    "maintenance": "Maintenance",
+    "maintenance": "En maintenance",
+    "unavailable": "Indisponible",
     "reserved": "Réservé"
   },
   "card": {
@@ -126,5 +130,13 @@
     "invalid_area": "La surface doit être un nombre positif",
     "invalid_bedrooms": "Le nombre de chambres doit être un nombre positif",
     "invalid_bathrooms": "Le nombre de salles de bain doit être un nombre positif"
-  }
+  },
+  "actions": {
+    "add_new": "Ajouter",
+    "manage": "Gérer",
+    "edit": "Modifier",
+    "delete": "Supprimer"
+  },
+  "month": "mois",
+  "no_results": "Aucun appartement ne correspond à vos filtres"
 } 

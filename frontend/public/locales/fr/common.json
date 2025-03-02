@@ -66,5 +66,17 @@
     "terms": "Conditions d'utilisation",
     "privacy": "Politique de confidentialité",
     "contact": "Contactez-nous"
+  },
+  "filters": {
+    "all": "Tous",
+    "active": "Actifs",
+    "inactive": "Inactifs"
+  },
+  "table": {
+    "rows_per_page": "Lignes par page :",
+    "page": "Page",
+    "of": "sur",
+    "next_page": "Page suivante",
+    "previous_page": "Page précédente"
   }
 } 

@@ -1,0 +1,37 @@
+{
+  "title": "Contracts",
+  "description": "Manage your rental contracts",
+  "filters": {
+    "status": "Status",
+    "date_range": "Date Range",
+    "tenant": "Tenant",
+    "apartment": "Apartment"
+  },
+  "status": {
+    "active": "Active",
+    "pending": "Pending",
+    "expired": "Expired",
+    "draft": "Draft",
+    "terminated": "Terminated"
+  },
+  "actions": {
+    "create_new": "Create New",
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "download": "Download",
+    "print": "Print",
+    "terminate": "Terminate"
+  },
+  "table": {
+    "contract_id": "Contract ID",
+    "tenant": "Tenant",
+    "apartment": "Apartment",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "monthly_rent": "Monthly Rent",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "no_results": "No contracts match your filters"
+} 

@@ -1,6 +1,6 @@
 {
   "title": "Apartments",
-  "subtitle": "Manage your rental properties",
+  "description": "Manage your apartments and properties",
   "list": {
     "empty": "No apartments found",
     "filter": "Filter apartments",
@@ -10,8 +10,10 @@
   },
   "filters": {
     "status": "Status",
+    "min_price": "Min Price",
+    "max_price": "Max Price",
     "location": "Location",
-    "price": "Price",
+    "bedrooms": "Bedrooms",
     "rooms": "Rooms",
     "area": "Area",
     "features": "Features",
@@ -29,7 +31,7 @@
     "available": "Available",
     "rented": "Rented",
     "maintenance": "Maintenance",
-    "reserved": "Reserved"
+    "unavailable": "Unavailable"
   },
   "card": {
     "bed": "{{count}} bedroom",
@@ -126,5 +128,13 @@
     "invalid_area": "Area must be a positive number",
     "invalid_bedrooms": "Number of bedrooms must be a positive number",
     "invalid_bathrooms": "Number of bathrooms must be a positive number"
-  }
+  },
+  "actions": {
+    "add_new": "Add New",
+    "manage": "Manage",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "month": "month",
+  "no_results": "No apartments match your filters"
 } 

@@ -65,5 +65,17 @@
     "terms": "Terms of Service",
     "privacy": "Privacy Policy",
     "contact": "Contact Us"
+  },
+  "filters": {
+    "all": "All",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "table": {
+    "rows_per_page": "Rows per page:",
+    "page": "Page",
+    "of": "of",
+    "next_page": "Next page",
+    "previous_page": "Previous page"
   }
 } 

@@ -7,6 +7,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
+import Apartments from './pages/Apartments';
+import Contracts from './pages/Contracts';
+import Tenants from './pages/Tenants';
 import NotFound from './pages/NotFound';
 
 // Layout
@@ -147,6 +150,9 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" replace />} />
           <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" replace />} />
+          <Route path="/apartments" element={isAuthenticated ? <Apartments /> : <Navigate to="/login" replace />} />
+          <Route path="/contracts" element={isAuthenticated ? <Contracts /> : <Navigate to="/login" replace />} />
+          <Route path="/tenants" element={isAuthenticated ? <Tenants /> : <Navigate to="/login" replace />} />
           {/* Add more protected routes here */}
         </Route>
 

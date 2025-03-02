@@ -1,0 +1,26 @@
+{
+  "title": "Tenants",
+  "description": "Manage your tenants",
+  "filters": {
+    "status": "Status",
+    "verification": "Verification",
+    "apartment": "Apartment"
+  },
+  "status": {
+    "active": "Active",
+    "pending": "Pending",
+    "former": "Former"
+  },
+  "verification": {
+    "verified": "Verified",
+    "unverified": "Unverified"
+  },
+  "actions": {
+    "add_new": "Add New",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view_profile": "View Profile",
+    "message": "Message"
+  },
+  "no_results": "No tenants match your filters"
+} 
