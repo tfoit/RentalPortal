@@ -36,3 +36,12 @@ yarn-error.log*
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# IDE specific files
+.cursor/
+
+# MongoDB is a separate repository
+mongodb/
+
+# Temporary files
+ubmodule status
