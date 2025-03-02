@@ -1,0 +1,6 @@
+{
+  "watch": ["src/**/*", "public/**/*", "webpack.config.js"],
+  "ext": "js,jsx,ts,tsx,json,css,html",
+  "ignore": ["node_modules", "dist"],
+  "verbose": true
+} 
