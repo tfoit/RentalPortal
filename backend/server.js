@@ -35,14 +35,14 @@ app.use(
 
 function connectToMainDB() {
   mongoose
-    .connect(process.env.MAIN_MONGODB_URI || "mongodb://seeyaa:1seeyaa64258spie@localhost:27117/RentalDB?authSource=admin", { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(process.env.MAIN_MONGODB_URI || "mongodb://seeyaa:1seeyaa64258spie@192.168.2.12:27117/RentalDB?authSource=admin", { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => logger.info("Connected to the Main MongoDB"))
     .catch((err) => logger.error("Could not connect to the Main MongoDB: " + err.message));
 }
 
 // Function to connect to the GridFS database
 function connectToGridFS() {
-  const gridFsConnection = mongoose.createConnection(process.env.GRIDFS_MONGODB_URI || "mongodb://seeyaa:1seeyaa64258spie@localhost:27117/RentalDB_files?authSource=admin", { useNewUrlParser: true, useUnifiedTopology: true });
+  const gridFsConnection = mongoose.createConnection(process.env.GRIDFS_MONGODB_URI || "mongodb://seeyaa:1seeyaa64258spie@192.168.2.12:27117/RentalDB_files?authSource=admin", { useNewUrlParser: true, useUnifiedTopology: true });
   const bucketName = process.env.GRIDFS_BUCKET_NAME || "uploads";
 
   gridFsConnection.once("open", () => {
