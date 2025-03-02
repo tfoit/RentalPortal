@@ -1,0 +1,65 @@
+{
+  "language": "Deutsch",
+  "language_code": "de",
+  "app_name": "EuroRentals",
+  "nav": {
+    "dashboard": "Dashboard",
+    "apartments": "Wohnungen",
+    "tenants": "Mieter",
+    "contracts": "Verträge",
+    "payments": "Zahlungen",
+    "documents": "Dokumente",
+    "settings": "Einstellungen",
+    "help": "Hilfe",
+    "profile": "Profil"
+  },
+  "actions": {
+    "add": "Hinzufügen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen",
+    "view": "Ansehen",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "clear": "Löschen",
+    "upload": "Hochladen",
+    "download": "Herunterladen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "submit": "Absenden",
+    "view_all": "Alle anzeigen",
+    "see_more": "Mehr anzeigen"
+  },
+  "status": {
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "pending": "Ausstehend",
+    "completed": "Abgeschlossen",
+    "draft": "Entwurf",
+    "loading": "Wird geladen...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "available": "Verfügbar",
+    "rented": "Vermietet",
+    "maintenance": "Wartung"
+  },
+  "currency": {
+    "eur": "Euro (€)",
+    "usd": "US-Dollar ($)",
+    "gbp": "Britisches Pfund (£)",
+    "chf": "Schweizer Franken (CHF)",
+    "pln": "Polnischer Złoty (zł)",
+    "czk": "Tschechische Krone (Kč)",
+    "sek": "Schwedische Krone (kr)",
+    "dkk": "Dänische Krone (kr)",
+    "nok": "Norwegische Krone (kr)"
+  },
+  "footer": {
+    "copyright": "© {{year}} EuroRentals. Alle Rechte vorbehalten.",
+    "terms": "Nutzungsbedingungen",
+    "privacy": "Datenschutzrichtlinie",
+    "contact": "Kontakt"
+  }
+} 

@@ -1,0 +1,67 @@
+{
+  "title": "Profil",
+  "subtitle": "Gérez vos informations et préférences de compte",
+  "personalInfo": "Informations Personnelles",
+  "editProfile": "Modifier le Profil",
+  "firstName": "Prénom",
+  "lastName": "Nom",
+  "email": "Adresse Email",
+  "phone": "Numéro de Téléphone",
+  "address": "Adresse",
+  "city": "Ville",
+  "country": "Pays",
+  "postalCode": "Code Postal",
+  "bio": "À Propos de Moi",
+  "tenant": "Locataire",
+  "landlord": "Propriétaire",
+  "agent": "Agent",
+  "admin": "Administrateur",
+  
+  "updateSuccess": "Profil mis à jour avec succès",
+  "updateError": "Échec de la mise à jour du profil. Veuillez réessayer.",
+  
+  "languageSettings": "Paramètres de Langue",
+  "selectLanguage": "Sélectionnez Votre Langue",
+  "languageDescription": "Choisissez la langue que vous souhaitez utiliser dans l'application. Cela affectera tous les textes, étiquettes et messages.",
+  
+  "currencySettings": "Paramètres de Devise",
+  "selectCurrency": "Sélectionnez Votre Devise Préférée",
+  "currencyDescription": "Choisissez la devise que vous souhaitez utiliser pour tous les prix de location et les paiements. Les prix seront automatiquement convertis selon les taux de change actuels.",
+  
+  "notifications": "Paramètres de Notification",
+  "notificationsUpdated": "Préférences de notification mises à jour avec succès",
+  "emailNotifications": "Notifications par Email",
+  "enableEmailNotifications": "Activer les notifications par email",
+  "emailNotificationsDescription": "Recevez des mises à jour importantes concernant vos locations, paiements et informations de compte par email.",
+  
+  "pushNotifications": "Notifications Push",
+  "enablePushNotifications": "Activer les notifications push",
+  "pushNotificationsDescription": "Recevez des alertes en temps réel directement sur votre navigateur ou appareil mobile lorsque des événements importants se produisent.",
+  
+  "smsNotifications": "Notifications SMS",
+  "enableSmsNotifications": "Activer les notifications SMS",
+  "smsNotificationsDescription": "Recevez des alertes par SMS pour les mises à jour critiques concernant vos locations et paiements.",
+  
+  "marketingPreferences": "Préférences Marketing",
+  "enableMarketingEmails": "Recevoir les emails marketing",
+  "marketingEmailsDescription": "Restez informé des offres promotionnelles, des nouvelles fonctionnalités et des opportunités de location qui pourraient vous intéresser.",
+  
+  "privacySettings": "Paramètres de Confidentialité",
+  "privacyUpdated": "Paramètres de confidentialité mis à jour avec succès",
+  "profileVisibility": "Visibilité du Profil",
+  "visibilityLevel": "Qui peut voir votre profil",
+  "public": "Public (Tout le monde)",
+  "contacts": "Contacts Uniquement",
+  "private": "Privé (Moi uniquement)",
+  "visibilityDescription": "Contrôlez qui peut consulter vos informations de profil et votre historique de location.",
+  
+  "contactPermissions": "Autorisations de Contact",
+  "allowContactFromOthers": "Autoriser les autres utilisateurs à me contacter",
+  "contactPermissionsDescription": "Décidez si d'autres utilisateurs sur la plateforme peuvent vous envoyer des messages ou des demandes de contact.",
+  
+  "dataVisibility": "Visibilité des Données",
+  "showContactInfo": "Afficher mes informations de contact",
+  "contactInfoDescription": "Autorisez votre email et votre numéro de téléphone à être visibles par les autres utilisateurs lorsqu'ils consultent votre profil.",
+  "showActivity": "Afficher mon activité de location",
+  "activityDescription": "Montrez votre historique de location et votre activité aux autres utilisateurs qui peuvent consulter votre profil."
+} 

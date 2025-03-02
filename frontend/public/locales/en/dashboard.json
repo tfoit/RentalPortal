@@ -1,0 +1,81 @@
+{
+  "welcome": "Welcome, {{name}}!",
+  "overview": "Your Overview",
+  "statistics": {
+    "apartments": {
+      "title": "Apartments",
+      "total": "Total",
+      "available": "Available",
+      "occupied": "Occupied",
+      "maintenance": "In Maintenance"
+    },
+    "tenants": {
+      "title": "Tenants",
+      "total": "Total",
+      "active": "Active",
+      "pending": "Pending",
+      "former": "Former"
+    },
+    "contracts": {
+      "title": "Contracts",
+      "total": "Total",
+      "active": "Active",
+      "expiring_soon": "Expiring Soon",
+      "expired": "Expired",
+      "pending": "Pending"
+    },
+    "payments": {
+      "title": "Payments",
+      "total": "Total",
+      "received": "Received",
+      "pending": "Pending",
+      "overdue": "Overdue",
+      "this_month": "This Month",
+      "last_month": "Last Month"
+    }
+  },
+  "recent": {
+    "apartments": {
+      "title": "Recent Apartments",
+      "empty": "No recent apartments to display",
+      "view_all": "View All Apartments",
+      "add_new": "Add Apartment"
+    },
+    "contracts": {
+      "title": "Recent Contracts",
+      "empty": "No recent contracts to display",
+      "view_all": "View All Contracts",
+      "add_new": "Add Contract"
+    },
+    "payments": {
+      "title": "Recent Payments",
+      "empty": "No recent payments to display",
+      "view_all": "View All Payments",
+      "add_new": "Add Payment"
+    },
+    "tenants": {
+      "title": "Recent Tenants",
+      "empty": "No recent tenants to display",
+      "view_all": "View All Tenants",
+      "add_new": "Add Tenant"
+    }
+  },
+  "alerts": {
+    "expiring_contracts": "{{count}} contracts expiring in the next 30 days",
+    "overdue_payments": "{{count}} overdue payments",
+    "maintenance_needed": "{{count}} apartments need maintenance",
+    "new_inquiries": "{{count}} new inquiries",
+    "view_all": "View All"
+  },
+  "quick_actions": {
+    "title": "Quick Actions",
+    "add_apartment": "Add Apartment",
+    "add_tenant": "Add Tenant",
+    "create_contract": "Create Contract",
+    "record_payment": "Record Payment",
+    "schedule_maintenance": "Schedule Maintenance",
+    "generate_report": "Generate Report"
+  },
+  "loading": "Loading dashboard...",
+  "error": "Error loading dashboard. Please try again."
+} 

@@ -1,0 +1,67 @@
+{
+  "title": "Profile",
+  "subtitle": "Manage your account information and preferences",
+  "personalInfo": "Personal Information",
+  "editProfile": "Edit Profile",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "email": "Email Address",
+  "phone": "Phone Number",
+  "address": "Address",
+  "city": "City",
+  "country": "Country",
+  "postalCode": "Postal Code",
+  "bio": "About Me",
+  "tenant": "Tenant",
+  "landlord": "Landlord",
+  "agent": "Agent",
+  "admin": "Administrator",
+  
+  "updateSuccess": "Profile updated successfully",
+  "updateError": "Failed to update profile. Please try again.",
+  
+  "languageSettings": "Language Settings",
+  "selectLanguage": "Select Your Language",
+  "languageDescription": "Choose the language you want to use throughout the application. This will affect all text, labels, and messages.",
+  
+  "currencySettings": "Currency Settings",
+  "selectCurrency": "Select Your Preferred Currency",
+  "currencyDescription": "Choose the currency you want to use for all rental prices and payments. Prices will be automatically converted based on current exchange rates.",
+  
+  "notifications": "Notification Settings",
+  "notificationsUpdated": "Notification preferences updated successfully",
+  "emailNotifications": "Email Notifications",
+  "enableEmailNotifications": "Enable email notifications",
+  "emailNotificationsDescription": "Receive important updates about your rentals, payments, and account information via email.",
+  
+  "pushNotifications": "Push Notifications",
+  "enablePushNotifications": "Enable push notifications",
+  "pushNotificationsDescription": "Receive real-time alerts directly to your browser or mobile device when important events occur.",
+  
+  "smsNotifications": "SMS Notifications",
+  "enableSmsNotifications": "Enable SMS notifications",
+  "smsNotificationsDescription": "Receive text message alerts for critical updates about your rentals and payments.",
+  
+  "marketingPreferences": "Marketing Preferences",
+  "enableMarketingEmails": "Receive marketing emails",
+  "marketingEmailsDescription": "Stay updated with promotional offers, new features, and rental opportunities that might interest you.",
+  
+  "privacySettings": "Privacy Settings",
+  "privacyUpdated": "Privacy settings updated successfully",
+  "profileVisibility": "Profile Visibility",
+  "visibilityLevel": "Who can see your profile",
+  "public": "Public (Everyone)",
+  "contacts": "Contacts Only",
+  "private": "Private (Only me)",
+  "visibilityDescription": "Control who can view your profile information and rental history.",
+  
+  "contactPermissions": "Contact Permissions",
+  "allowContactFromOthers": "Allow other users to contact me",
+  "contactPermissionsDescription": "Decide whether other users on the platform can send you messages or contact requests.",
+  
+  "dataVisibility": "Data Visibility",
+  "showContactInfo": "Show my contact information",
+  "contactInfoDescription": "Allow your email and phone number to be visible to other users when they view your profile.",
+  "showActivity": "Show my rental activity",
+  "activityDescription": "Show your rental history and activity to other users who can view your profile."
+} 

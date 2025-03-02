@@ -1,0 +1,65 @@
+{
+  "language": "Español",
+  "language_code": "es",
+  "app_name": "EuroRentals",
+  "nav": {
+    "dashboard": "Panel de Control",
+    "apartments": "Apartamentos",
+    "tenants": "Inquilinos",
+    "contracts": "Contratos",
+    "payments": "Pagos",
+    "documents": "Documentos",
+    "settings": "Configuración",
+    "help": "Ayuda",
+    "profile": "Perfil"
+  },
+  "actions": {
+    "add": "Añadir",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "view": "Ver",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "clear": "Limpiar",
+    "upload": "Subir",
+    "download": "Descargar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "submit": "Enviar",
+    "view_all": "Ver todo",
+    "see_more": "Ver más"
+  },
+  "status": {
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "pending": "Pendiente",
+    "completed": "Completado",
+    "draft": "Borrador",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "available": "Disponible",
+    "rented": "Alquilado",
+    "maintenance": "Mantenimiento"
+  },
+  "currency": {
+    "eur": "Euro (€)",
+    "usd": "Dólar estadounidense ($)",
+    "gbp": "Libra esterlina (£)",
+    "chf": "Franco suizo (CHF)",
+    "pln": "Złoty polaco (zł)",
+    "czk": "Corona checa (Kč)",
+    "sek": "Corona sueca (kr)",
+    "dkk": "Corona danesa (kr)",
+    "nok": "Corona noruega (kr)"
+  },
+  "footer": {
+    "copyright": "© {{year}} EuroRentals. Todos los derechos reservados.",
+    "terms": "Términos de uso",
+    "privacy": "Política de privacidad",
+    "contact": "Contacto"
+  }
+} 

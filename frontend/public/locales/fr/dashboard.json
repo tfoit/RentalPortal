@@ -1,0 +1,81 @@
+{
+  "welcome": "Bienvenue, {{name}}!",
+  "overview": "Votre Vue d'Ensemble",
+  "statistics": {
+    "apartments": {
+      "title": "Appartements",
+      "total": "Total",
+      "available": "Disponibles",
+      "occupied": "Occupés",
+      "maintenance": "En maintenance"
+    },
+    "tenants": {
+      "title": "Locataires",
+      "total": "Total",
+      "active": "Actifs",
+      "pending": "En attente",
+      "former": "Anciens"
+    },
+    "contracts": {
+      "title": "Contrats",
+      "total": "Total",
+      "active": "Actifs",
+      "expiring_soon": "Expirant bientôt",
+      "expired": "Expirés",
+      "pending": "En attente"
+    },
+    "payments": {
+      "title": "Paiements",
+      "total": "Total",
+      "received": "Reçus",
+      "pending": "En attente",
+      "overdue": "En retard",
+      "this_month": "Ce mois-ci",
+      "last_month": "Le mois dernier"
+    }
+  },
+  "recent": {
+    "apartments": {
+      "title": "Appartements Récents",
+      "empty": "Aucun appartement récent à afficher",
+      "view_all": "Voir tous les appartements",
+      "add_new": "Ajouter un appartement"
+    },
+    "contracts": {
+      "title": "Contrats Récents",
+      "empty": "Aucun contrat récent à afficher",
+      "view_all": "Voir tous les contrats",
+      "add_new": "Ajouter un contrat"
+    },
+    "payments": {
+      "title": "Paiements Récents",
+      "empty": "Aucun paiement récent à afficher",
+      "view_all": "Voir tous les paiements",
+      "add_new": "Ajouter un paiement"
+    },
+    "tenants": {
+      "title": "Locataires Récents",
+      "empty": "Aucun locataire récent à afficher",
+      "view_all": "Voir tous les locataires",
+      "add_new": "Ajouter un locataire"
+    }
+  },
+  "alerts": {
+    "expiring_contracts": "{{count}} contrats expirent dans les 30 prochains jours",
+    "overdue_payments": "{{count}} paiements sont en retard",
+    "maintenance_needed": "{{count}} appartements nécessitent une maintenance",
+    "new_inquiries": "{{count}} nouvelles demandes de renseignements",
+    "view_all": "Voir tout"
+  },
+  "quick_actions": {
+    "title": "Actions Rapides",
+    "add_apartment": "Ajouter un appartement",
+    "add_tenant": "Ajouter un locataire",
+    "create_contract": "Créer un contrat",
+    "record_payment": "Enregistrer un paiement",
+    "schedule_maintenance": "Planifier une maintenance",
+    "generate_report": "Générer un rapport"
+  },
+  "loading": "Chargement du tableau de bord...",
+  "error": "Erreur lors du chargement du tableau de bord. Veuillez réessayer."
+} 
