@@ -71,6 +71,15 @@ exports.uploadFile = async (req, res) => {
 exports.getFileAndMetadata = async (req, res) => {
   try {
     const fileId = req.params.fileId; // Assuming the fileId is passed as a URL parameter
+
+    // Add validation for fileId
+    if (!fileId || fileId === "null" || fileId === "undefined") {
+      return res.status(400).send({
+        message: "Invalid file ID",
+        error: "A valid file ID is required",
+      });
+    }
+
     const metadata = await getFileMetadata(fileId); // Retrieve metadata using _id
     if (!metadata) {
       return res.status(404).send({ message: "File metadata not found" });
@@ -87,6 +96,11 @@ exports.getFileAndMetadata = async (req, res) => {
 
 async function getFileMetadata(fileId) {
   try {
+    // Add additional validation
+    if (!fileId || fileId === "null" || fileId === "undefined") {
+      throw new Error("Invalid file ID provided");
+    }
+
     const metadata = await FileMetadata.findById(fileId); // Use _id to query metadata
     return metadata;
   } catch (error) {

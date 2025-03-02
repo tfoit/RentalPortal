@@ -1,5 +1,14 @@
 const multer = require("multer");
 
+// Define the FileUploadError class
+class FileUploadError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "FileUploadError";
+    this.status = 400; // Bad Request
+  }
+}
+
 const fileFilter = (req, file, cb) => {
   const allowedTypes = {
     "image/jpeg": true,
@@ -8,13 +17,14 @@ const fileFilter = (req, file, cb) => {
     "application/pdf": true,
     "video/mp4": true,
     "video/quicktime": true,
+    "text/plain": true,
   };
 
   if (file.mimetype in allowedTypes) {
     cb(null, true); // Accept file
   } else {
     // Provides a more specific error message
-    cb(new FileUploadError("Unsupported file type. Allowed types are JPEG, PNG, GIF, PDF, MP4, and QuickTime."), false);
+    cb(new FileUploadError("Unsupported file type. Allowed types are JPEG, PNG, GIF, PDF, MP4, QuickTime, and TXT."), false);
   }
 };
 

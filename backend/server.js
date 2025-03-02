@@ -83,5 +83,19 @@ app.use("/notifications", notificationRoutes);
 app.use("/contracts", contractRoutes);
 app.use("/files", fileRoutes);
 
+// Health check endpoint
+app.get("/health", (req, res) => {
+  const healthData = {
+    status: "UP",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    mainDbConnection: mongoose.connection.readyState === 1 ? "Connected" : "Disconnected",
+    environment: process.env.NODE_ENV || "development",
+    version: process.env.npm_package_version || "1.0.0",
+  };
+
+  res.status(200).json(healthData);
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => logger.info(`Server running on port ${PORT}`));
