@@ -1,0 +1,82 @@
+
+> rentalportal@1.0.0 dev
+> concurrently "npm run dev:backend" "npm run dev:frontend"
+
+[1] 
+[1] > rentalportal@1.0.0 dev:frontend
+[1] > cd frontend && npm run dev
+[1] 
+[0] 
+[0] > rentalportal@1.0.0 dev:backend
+[0] > cd backend && npm run dev
+[0] 
+[1] 
+[1] > rental-portal-frontend@1.0.0 dev
+[1] > nodemon --watch src --watch public --ext js,jsx,css,html --exec "webpack serve --mode development"
+[1] 
+[0] 
+[0] > backend@0.0.1 dev
+[0] > cross-env NODE_ENV=development nodemon server.js
+[0] 
+[1] [33m[nodemon] 3.1.9[39m
+[1] [33m[nodemon] reading config .\nodemon.json[39m
+[1] [33m[nodemon] to restart at any time, enter `rs`[39m
+[1] [33m[nodemon] or send SIGHUP to 23256 to restart[39m
+[1] [33m[nodemon] ignoring: .\node_modules/**/* dist[39m
+[1] [33m[nodemon] watching path(s): src\**\* public\**\*[39m
+[1] [33m[nodemon] watching extensions: js,jsx,css,html[39m
+[1] [32m[nodemon] starting `webpack serve --mode development`[39m
+[1] [33m[nodemon] spawning[39m
+[1] [33m[nodemon] child pid: 30640[39m
+[1] [33m[nodemon] watching 22 files[39m
+[0] [33m[nodemon] 3.1.9[39m
+[0] [33m[nodemon] to restart at any time, enter `rs`[39m
+[0] [33m[nodemon] watching path(s): *.*[39m
+[0] [33m[nodemon] watching extensions: js,mjs,cjs,json[39m
+[0] [32m[nodemon] starting `node server.js`[39m
+[0] File upload middleware loaded - nodemon test (UPDATED)
+[1] <i> [webpack-dev-server] [HPM] Proxy created: /users  -> http://localhost:3000
+[1] <i> [webpack-dev-server] [HPM] Proxy created: /apartments  -> http://localhost:3000
+[1] <i> [webpack-dev-server] [HPM] Proxy created: /files  -> http://localhost:3000
+[1] C:\RentalPortal\frontend\node_modules\webpack-dev-server\lib\Server.js:2557
+[1]         throw error;
+[1]         ^
+[1] 
+[1] Error: listen EADDRINUSE: address already in use :::8080
+[1]     at Server.setupListenHandle [as _listen2] (node:net:1937:16)
+[1]     at listenInCluster (node:net:1994:12)
+[1]     at Server.listen (node:net:2099:7)
+[1]     at READ_WRITE (C:\RentalPortal\frontend\node_modules\webpack-dev-server\lib\Server.js:3367:23)
+[1]     at new Promise (<anonymous>)
+[1]     at Server.start (C:\RentalPortal\frontend\node_modules\webpack-dev-server\lib\Server.js:3365:7)
+[1]     at async Command.<anonymous> (C:\RentalPortal\frontend\node_modules\@webpack-cli\serve\lib\index.js:158:21)
+[1]     at async Command.parseAsync (C:\RentalPortal\frontend\node_modules\webpack-cli\node_modules\commander\lib\command.js:935:5)
+[1]     at async Command.<anonymous> (C:\RentalPortal\frontend\node_modules\webpack-cli\lib\webpack-cli.js:1356:13)
+[1]     at async Command.parseAsync (C:\RentalPortal\frontend\node_modules\webpack-cli\node_modules\commander\lib\command.js:935:5) {
+[1]   code: 'EADDRINUSE',
+[1]   errno: -4091,
+[1]   syscall: 'listen',
+[1]   address: '::',
+[1]   port: 8080
+[1] }
+[1] 
+[1] Node.js v22.13.1
+[1] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] info: Attempting to connect to Main MongoDB at mongodb://seeyaa:1seeyaa64258spie@192.168.2.12:27117/RentalDB?authSource=admin {"timestamp":"2025-03-01T13:00:12.334Z"}
+[0] info: Attempting to connect to GridFS MongoDB at mongodb://seeyaa:1seeyaa64258spie@192.168.2.12:27117/RentalGRIDS?authSource=admin {"timestamp":"2025-03-01T13:00:12.338Z"}
+[0] (node:47504) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+[0] (Use `node --trace-deprecation ...` to show where the warning was created)
+[0] (node:47504) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+[0] (node:47504) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+[0] (node:47504) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+[0] (node:47504) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+[0] (node:47504) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+[0] (node:47504) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+[0] error: Server error: listen EADDRINUSE: address already in use :::3000 {"timestamp":"2025-03-01T13:00:12.344Z"}
+[0] error: Port 3000 is already in use {"timestamp":"2025-03-01T13:00:12.344Z"}
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+Terminate batch job (Y/N)? 
+^C[0] Terminate batch job (Y/N)? ^C
+[1] ^CTerminate batch job (Y/N)? 
+[1] npm run dev:frontend exited with code 1
+[0] npm run dev:backend exited with code 1
