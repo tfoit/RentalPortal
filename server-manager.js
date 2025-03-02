@@ -11,7 +11,7 @@ const rl = readline.createInterface({
 });
 
 // Configuration
-const BACKEND_PORT = 3000;
+const BACKEND_PORT = 5000;
 const FRONTEND_PORT = 8080;
 const BACKEND_DIR = path.join(__dirname, "backend");
 const FRONTEND_DIR = path.join(__dirname, "frontend");

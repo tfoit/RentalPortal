@@ -27,7 +27,7 @@ app.use(morgan("combined", { stream: { write: (message) => logger.info(message.t
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL, // e.g., "https://yourdomain.com"
+    origin: process.env.CLIENT_URL || "http://localhost:8080", // e.g., "https://yourdomain.com"
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
@@ -35,14 +35,14 @@ app.use(
 
 function connectToMainDB() {
   mongoose
-    .connect(process.env.MAIN_MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(process.env.MAIN_MONGODB_URI || "mongodb://localhost:27017/rental_portal", { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => logger.info("Connected to the Main MongoDB"))
     .catch((err) => logger.error("Could not connect to the Main MongoDB: " + err.message));
 }
 
 // Function to connect to the GridFS database
 function connectToGridFS() {
-  const gridFsConnection = mongoose.createConnection(process.env.GRIDFS_MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+  const gridFsConnection = mongoose.createConnection(process.env.GRIDFS_MONGODB_URI || "mongodb://localhost:27017/rental_portal_files", { useNewUrlParser: true, useUnifiedTopology: true });
   const bucketName = process.env.GRIDFS_BUCKET_NAME || "uploads";
 
   gridFsConnection.once("open", () => {
@@ -83,5 +83,5 @@ app.use("/notifications", notificationRoutes);
 app.use("/contracts", contractRoutes);
 app.use("/files", fileRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => logger.info(`Server running on port ${PORT}`));
