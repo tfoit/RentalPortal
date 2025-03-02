@@ -273,10 +273,58 @@ exports.terminateApartment = async (req, res) => {
 
 exports.getAllApartments = async (req, res) => {
   try {
-    const apartments = await Apartment.find();
-    res.send(apartments);
+    const { page = 1, limit = 10, search, status, minPrice, maxPrice, sortBy = "creationDate", sortOrder = "desc" } = req.query;
+
+    // Build query object for filtering
+    let query = {};
+
+    // Add status filter if provided and not 'all'
+    if (status && status !== "all") {
+      query.status = status;
+    }
+
+    // Add price range filters if provided
+    if (minPrice || maxPrice) {
+      query.rent = {};
+      if (minPrice) query.rent.$gte = Number(minPrice);
+      if (maxPrice) query.rent.$lte = Number(maxPrice);
+    }
+
+    // Add search functionality across multiple fields
+    if (search) {
+      query.$or = [{ title: { $regex: search, $options: "i" } }, { location: { $regex: search, $options: "i" } }, { description: { $regex: search, $options: "i" } }];
+    }
+
+    // Count total documents for pagination
+    const total = await Apartment.countDocuments(query);
+
+    // Determine sort direction
+    const sortDirection = sortOrder === "desc" ? -1 : 1;
+
+    // Create sort object
+    const sort = {};
+    sort[sortBy] = sortDirection;
+
+    // Execute query with pagination and sorting
+    const apartments = await Apartment.find(query)
+      .sort(sort)
+      .limit(Number(limit))
+      .skip((Number(page) - 1) * Number(limit))
+      .populate("owner", "username email")
+      .lean();
+
+    // Send paginated response
+    res.status(200).send({
+      apartments,
+      totalCount: total,
+      totalPages: Math.ceil(total / Number(limit)),
+      currentPage: Number(page),
+      hasNextPage: Number(page) < Math.ceil(total / Number(limit)),
+      hasPrevPage: Number(page) > 1,
+    });
   } catch (error) {
-    res.status(500).send({ message: "Error getting apartments", error });
+    logger.error("Error getting apartments:", error);
+    res.status(500).send({ message: "Error getting apartments", error: error.message });
   }
 };
 
@@ -344,5 +392,39 @@ exports.updateTenants = async (req, res) => {
   } catch (error) {
     console.error("Error updating tenants:", error);
     res.status(500).json({ message: "Error updating tenants", error: error.message });
+  }
+};
+
+// Add new endpoint for apartment media
+exports.getApartmentMedia = async (req, res) => {
+  try {
+    const { id, mediaType } = req.params;
+
+    if (!["images", "pdfBlueprints", "videos"].includes(mediaType)) {
+      return res.status(400).send({ message: "Invalid media type. Must be one of: images, pdfBlueprints, videos" });
+    }
+
+    const apartment = await Apartment.findById(id);
+    if (!apartment) {
+      return res.status(404).send({ message: "Apartment not found" });
+    }
+
+    // Get the media IDs from the apartment
+    const mediaIds = apartment.media[mediaType] || [];
+
+    if (mediaIds.length === 0) {
+      return res.status(200).send({ message: `No ${mediaType} found for this apartment`, media: [] });
+    }
+
+    // Get the metadata for these files
+    const fileMetadata = await FileMetadata.find({ fileId: { $in: mediaIds } });
+
+    res.status(200).send({
+      mediaType,
+      media: fileMetadata,
+    });
+  } catch (error) {
+    logger.error("Error getting apartment media:", error);
+    res.status(500).send({ message: "Error getting apartment media", error: error.message });
   }
 };

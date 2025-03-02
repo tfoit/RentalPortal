@@ -26,6 +26,7 @@ const Register = () => {
     firstName: '',
     lastName: '',
     email: '',
+    username: '',
     password: '',
     confirmPassword: '',
     agreeToTerms: false,
@@ -78,6 +79,13 @@ const Register = () => {
       newErrors.email = 'Please enter a valid email address';
     }
     
+    // Validate username
+    if (!formData.username.trim()) {
+      newErrors.username = 'Username is required';
+    } else if (formData.username.length < 5) {
+      newErrors.username = 'Username must be at least 5 characters long';
+    }
+    
     // Validate password
     if (!formData.password) {
       newErrors.password = 'Password is required';
@@ -117,8 +125,8 @@ const Register = () => {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
+        username: formData.username,
         password: formData.password,
-        username: formData.email.split('@')[0],
       };
 
       const result = await register(userData);
@@ -201,6 +209,19 @@ const Register = () => {
                   />
                 </Grid>
               </Grid>
+
+              <TextField
+                fullWidth
+                label="Username"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                variant="outlined"
+                required
+                error={!!errors.username}
+                helperText={errors.username || "Username must be at least 5 characters long"}
+                autoComplete="username"
+              />
 
               <TextField
                 fullWidth

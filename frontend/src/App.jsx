@@ -91,7 +91,11 @@ function App() {
       if (isAuthenticated && (currentPath === '/login' || currentPath === '/register')) {
         enhancedLogger.info('↪️ Redirecting to dashboard (authenticated user on auth page)');
         navigate('/dashboard', { replace: true });
-      } else if (!isAuthenticated && currentPath !== '/login' && currentPath !== '/register') {
+      } else if (!isAuthenticated && 
+                !currentPath.startsWith('/login') && 
+                !currentPath.startsWith('/register') && 
+                !currentPath.startsWith('/forgot-password') && 
+                !currentPath.startsWith('/reset-password')) {
         enhancedLogger.info('↪️ Redirecting to login (unauthenticated user on protected page)');
         navigate('/login', { replace: true });
       }

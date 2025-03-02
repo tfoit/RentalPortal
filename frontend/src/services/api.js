@@ -1,4 +1,5 @@
 import axios from "axios";
+import logger from "../utils/logger";
 
 // Create an axios instance with default config
 const api = axios.create({
@@ -8,36 +9,60 @@ const api = axios.create({
   },
 });
 
-// Add a request interceptor
+// Add a request interceptor with improved token handling and logging
 api.interceptors.request.use(
   (config) => {
-    // Get token from localStorage
+    // Get token from localStorage every time to ensure it's up to date
     const token = localStorage.getItem("token");
 
     // If token exists, add it to the headers
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      logger.debug("API Request: Setting authorization header", {
+        url: config.url,
+        method: config.method,
+        hasToken: true,
+      });
+    } else {
+      logger.debug("API Request: No token available", {
+        url: config.url,
+        method: config.method,
+      });
     }
 
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    logger.error("API Request interceptor error", { error: error.message });
+    return Promise.reject(error);
+  }
 );
 
-// Add a response interceptor
+// Add a response interceptor with better error handling
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     // Handle authentication errors
     if (error.response && error.response.status === 401) {
+      logger.warn("API Response: Authentication error (401)", {
+        url: error.config.url,
+        method: error.config.method,
+      });
+
       localStorage.removeItem("token");
-      // Optional: Redirect to login page
-      // window.location.href = '/login';
+
+      // Only trigger a redirect if we're in a browser environment and not in a testing environment
+      if (typeof window !== "undefined" && process.env.NODE_ENV !== "test") {
+        window.dispatchEvent(new CustomEvent("auth:logout"));
+      }
     }
 
     return Promise.reject(error);
   }
 );
+
+// Expose the same instance that can be imported directly
+export default api;
 
 // Auth API calls
 export const authAPI = {
@@ -51,11 +76,11 @@ export const authAPI = {
 
 // Apartment API calls
 export const apartmentAPI = {
-  getAll: (params) => api.get("/apartments", { params }),
-  getById: (id) => api.get(`/apartments/${id}`),
-  create: (data) => api.post("/apartments", data),
-  update: (id, data) => api.put(`/apartments/${id}`, data),
-  delete: (id) => api.delete(`/apartments/${id}`),
+  getAll: (params) => api.get("/apartments/get-all-apartments", { params }),
+  getById: (id) => api.get(`/apartments/get-apartment/${id}`),
+  create: (data) => api.post("/apartments/create-apartment", data),
+  update: (id, data) => api.put(`/apartments/update-apartment/${id}`, data),
+  delete: (id) => api.delete(`/apartments/delete-apartment/${id}`),
 };
 
 // File API calls
@@ -99,5 +124,3 @@ export const notificationAPI = {
   markAllAsRead: () => api.put("/notifications/read-all"),
   delete: (id) => api.delete(`/notifications/${id}`),
 };
-
-export default api;

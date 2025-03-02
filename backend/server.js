@@ -83,6 +83,13 @@ app.use("/notifications", notificationRoutes);
 app.use("/contracts", contractRoutes);
 app.use("/files", fileRoutes);
 
+// Add support for /api prefix
+app.use("/api/users", userRoutes);
+app.use("/api/apartments", apartmentRoutes);
+app.use("/api/notifications", notificationRoutes);
+app.use("/api/contracts", contractRoutes);
+app.use("/api/files", fileRoutes);
+
 // Health check endpoint
 app.get("/health", (req, res) => {
   const healthData = {

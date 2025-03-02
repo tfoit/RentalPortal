@@ -22,19 +22,22 @@ router.get("/get-apartment/:id", apartmentController.getApartment);
 // Route to get all apartments
 router.get("/get-all-apartments", apartmentController.getAllApartments);
 // Route to update an apartment
-router.put("/update-apartment/:id", apartmentController.updateApartment);
+router.put("/update-apartment/:id", authenticateToken, apartmentController.updateApartment);
 // Route to delete an apartment
-router.delete("/delete-apartment/:id", apartmentController.deleteApartment);
+router.delete("/delete-apartment/:id", authenticateToken, apartmentController.deleteApartment);
 
-// Define other user-related routes here...Hej
+// New route to get apartment media
+router.get("/get-apartment-media/:id/:mediaType", apartmentController.getApartmentMedia);
+
+// Define other user-related routes here...
 
 // Route to rent an apartment
-router.post("/rent-apartment", apartmentController.rentApartment);
+router.post("/rent-apartment", authenticateToken, apartmentController.rentApartment);
 
 // Route to move out of an apartment
-router.post("/terminate-tenancy", apartmentController.terminateApartment);
+router.post("/terminate-tenancy", authenticateToken, apartmentController.terminateApartment);
 
 // Route to update tenants in an apartment
-router.post("/update-tenants/:apartmentId", apartmentController.updateTenants);
+router.post("/update-tenants/:apartmentId", authenticateToken, apartmentController.updateTenants);
 
 module.exports = router;

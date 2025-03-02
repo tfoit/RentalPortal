@@ -72,10 +72,8 @@ const Login = () => {
       });
 
       if (result.success) {
-        // Slight delay to ensure authentication state is updated
-        setTimeout(() => {
-          navigate('/dashboard', { replace: true });
-        }, 100);
+        // Navigate immediately after successful login (no timeout needed as checkAuthStatus is now part of login)
+        navigate('/dashboard', { replace: true });
       } else {
         setError(result.error || t('login.error.invalid_credentials'));
       }

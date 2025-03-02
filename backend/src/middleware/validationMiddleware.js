@@ -10,7 +10,7 @@ exports.registerValidation = [
 ];
 
 exports.loginValidation = [
-  body("username").notEmpty().withMessage("Username must not be empty"),
+  body("email").isEmail().withMessage("Email must be valid"),
   body("password").notEmpty().withMessage("Password must not be empty"),
   // Add more validation rules as needed
 ];

@@ -17,24 +17,21 @@ import {
   Chip,
   Divider,
   Paper,
-  CircularProgress
+  CircularProgress,
+  Snackbar,
+  Alert
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import AddIcon from '@mui/icons-material/Add';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { useTranslation } from 'react-i18next';
-import { mockDashboardData } from '../services/dashboardService';
 import PriceFormatter from '../components/PriceFormatter';
-
-// Mock data for apartments - in a real app you would fetch this from an API
-const MOCK_APARTMENTS = [
-  ...mockDashboardData.recentApartments,
-  { id: "apt5", name: "Downtown Loft", address: "202 High St, Berlin", status: "available", price: 1650 },
-  { id: "apt6", name: "Garden Apartment", address: "303 Park Lane, Munich", status: "rented", price: 1400 },
-  { id: "apt7", name: "Urban Studio", address: "404 City Center, Hamburg", status: "available", price: 1100 },
-  { id: "apt8", name: "Family Home", address: "505 Suburb Rd, Frankfurt", status: "maintenance", price: 2200 },
-];
+import ApartmentForm from '../components/apartments/ApartmentForm';
+import apartmentService from '../services/apartmentService';
+import enhancedLogger from '../utils/enhancedLogger';
 
 // Status color mapping
 const statusColors = {
@@ -48,47 +45,52 @@ const Apartments = () => {
   const { t } = useTranslation(['common', 'apartments']);
   const [apartments, setApartments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [priceRange, setPriceRange] = useState([0, 5000]);
+  const [formOpen, setFormOpen] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: '',
+    severity: 'success'
+  });
 
+  // Function to fetch apartments from service
+  const fetchApartments = async (filters = {}) => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      enhancedLogger.info('Fetching apartments with filters', { filters });
+      
+      // Create params object for the API call
+      const params = {
+        search: filters.search || searchTerm,
+        status: filters.status || statusFilter,
+        minPrice: filters.minPrice !== undefined ? filters.minPrice : priceRange[0],
+        maxPrice: filters.maxPrice !== undefined ? filters.maxPrice : priceRange[1]
+      };
+      
+      // Fetch apartments with params
+      const data = await apartmentService.getApartments(params);
+      setApartments(data);
+      enhancedLogger.debug('Apartments fetched successfully', { count: data.length });
+      
+    } catch (err) {
+      enhancedLogger.error('Error fetching apartments', { error: err });
+      setError(err.message || 'Failed to load apartments');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Initial data fetch
   useEffect(() => {
-    // Simulate API call
-    const fetchApartments = async () => {
-      try {
-        // In a real app, this would be an API call
-        setLoading(true);
-        // Simulate network delay
-        await new Promise(resolve => setTimeout(resolve, 800));
-        setApartments(MOCK_APARTMENTS);
-      } catch (error) {
-        console.error('Error fetching apartments:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchApartments();
   }, []);
 
-  // Apply filters
-  const filteredApartments = apartments.filter(apartment => {
-    // Apply search filter
-    const matchesSearch = 
-      apartment.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      apartment.address.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    // Apply status filter
-    const matchesStatus = statusFilter === 'all' || apartment.status === statusFilter;
-    
-    // Apply price filter
-    const matchesPrice = 
-      apartment.price >= priceRange[0] && 
-      apartment.price <= priceRange[1];
-    
-    return matchesSearch && matchesStatus && matchesPrice;
-  });
-
+  // Apply filters on the server-side
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -107,6 +109,81 @@ const Apartments = () => {
     setPriceRange([priceRange[0], newMax]);
   };
 
+  // Apply filters button handler
+  const handleApplyFilters = () => {
+    fetchApartments({
+      search: searchTerm,
+      status: statusFilter,
+      minPrice: priceRange[0],
+      maxPrice: priceRange[1]
+    });
+  };
+
+  // Clear filters
+  const handleClearFilters = () => {
+    setSearchTerm('');
+    setStatusFilter('all');
+    setPriceRange([0, 5000]);
+    
+    // Fetch without filters
+    fetchApartments({
+      search: '',
+      status: 'all',
+      minPrice: 0,
+      maxPrice: 5000
+    });
+  };
+
+  const handleOpenForm = () => {
+    setFormOpen(true);
+  };
+
+  const handleCloseForm = () => {
+    setFormOpen(false);
+  };
+
+  const handleSaveApartment = async (formData) => {
+    try {
+      setLoading(true);
+      
+      // Create the apartment through the service
+      const newApartment = await apartmentService.createApartment(formData);
+      
+      // Refresh the apartment list
+      await fetchApartments();
+      
+      // Show success message
+      setSnackbar({
+        open: true,
+        message: t('apartments:alerts.create_success', 'Apartment created successfully'),
+        severity: 'success'
+      });
+      
+    } catch (err) {
+      enhancedLogger.error('Error creating apartment', { error: err });
+      
+      setSnackbar({
+        open: true,
+        message: err.message || t('apartments:alerts.create_error', 'Failed to create apartment'),
+        severity: 'error'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({
+      ...snackbar,
+      open: false
+    });
+  };
+
+  // Handle retry on error
+  const handleRetry = () => {
+    fetchApartments();
+  };
+
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3, alignItems: 'center' }}>
@@ -116,7 +193,7 @@ const Apartments = () => {
         <Button 
           variant="contained" 
           startIcon={<AddIcon />}
-          onClick={() => console.log('Add new apartment')}
+          onClick={handleOpenForm}
         >
           {t('apartments:actions.add_new', 'Add New')}
         </Button>
@@ -137,6 +214,11 @@ const Apartments = () => {
                   </InputAdornment>
                 ),
               }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleApplyFilters();
+                }
+              }}
             />
           </Grid>
           <Grid item xs={12} md={2}>
@@ -154,7 +236,7 @@ const Apartments = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid item xs={6} md={2}>
             <TextField
               fullWidth
               label={t('apartments:filters.min_price', 'Min Price')}
@@ -166,7 +248,7 @@ const Apartments = () => {
               }}
             />
           </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid item xs={6} md={2}>
             <TextField
               fullWidth
               label={t('apartments:filters.max_price', 'Max Price')}
@@ -178,6 +260,21 @@ const Apartments = () => {
               }}
             />
           </Grid>
+          <Grid item xs={12} md={2} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+            <Button 
+              variant="outlined" 
+              onClick={handleClearFilters}
+            >
+              {t('common:actions.clear', 'Clear')}
+            </Button>
+            <Button 
+              variant="contained" 
+              onClick={handleApplyFilters}
+              startIcon={<FilterListIcon />}
+            >
+              {t('common:actions.filter', 'Filter')}
+            </Button>
+          </Grid>
         </Grid>
       </Paper>
 
@@ -185,37 +282,50 @@ const Apartments = () => {
         <Box sx={{ display: 'flex', justifyContent: 'center', my: 5 }}>
           <CircularProgress />
         </Box>
-      ) : filteredApartments.length === 0 ? (
+      ) : error ? (
+        <Paper sx={{ p: 4, textAlign: 'center', my: 5 }}>
+          <ErrorOutlineIcon color="error" sx={{ fontSize: 60, mb: 2 }} />
+          <Typography variant="h6" color="error" gutterBottom>
+            {t('common:status.error', 'Error')}
+          </Typography>
+          <Typography variant="body1" color="text.secondary" paragraph>
+            {error}
+          </Typography>
+          <Button 
+            variant="contained" 
+            startIcon={<RefreshIcon />} 
+            onClick={handleRetry}
+          >
+            {t('common:actions.retry', 'Retry')}
+          </Button>
+        </Paper>
+      ) : apartments.length === 0 ? (
         <Box sx={{ textAlign: 'center', my: 5 }}>
           <Typography variant="h6" color="text.secondary">
             {t('apartments:no_results', 'No apartments match your filters')}
           </Typography>
           <Button 
             sx={{ mt: 2 }} 
-            onClick={() => {
-              setSearchTerm('');
-              setStatusFilter('all');
-              setPriceRange([0, 5000]);
-            }}
+            onClick={handleClearFilters}
           >
             {t('common:actions.clear_filters', 'Clear Filters')}
           </Button>
         </Box>
       ) : (
         <Grid container spacing={3}>
-          {filteredApartments.map((apartment) => (
-            <Grid item xs={12} sm={6} md={4} key={apartment.id}>
+          {apartments.map((apartment) => (
+            <Grid item xs={12} sm={6} md={4} key={apartment._id}>
               <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                 <CardMedia
                   component="img"
                   height="140"
-                  image={`https://source.unsplash.com/random/400x200/?apartment&sig=${apartment.id}`}
-                  alt={apartment.name}
+                  image={`https://source.unsplash.com/random/400x200/?apartment&sig=${apartment._id}`}
+                  alt={apartment.title}
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
                     <Typography variant="h6" component="div">
-                      {apartment.name}
+                      {apartment.title}
                     </Typography>
                     <Chip 
                       label={t(`apartments:status.${apartment.status}`, apartment.status)}
@@ -229,19 +339,44 @@ const Apartments = () => {
                     sx={{ display: 'flex', alignItems: 'center', mb: 2 }}
                   >
                     <LocationOnIcon sx={{ fontSize: 16, mr: 0.5 }} />
-                    {apartment.address}
+                    {apartment.location}
                   </Typography>
-                  <Divider sx={{ my: 1 }} />
-                  <Typography variant="h6" color="primary">
-                    <PriceFormatter value={apartment.price} /> / {t('apartments:month', 'month')}
-                  </Typography>
+                  
+                  {/* Show additional details if available */}
+                  {(apartment.bedrooms || apartment.bathrooms || apartment.size) && (
+                    <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+                      {apartment.bedrooms && (
+                        <Typography variant="body2" color="text.secondary">
+                          {t('apartments:card.bed', '{{count}} bedroom', { count: apartment.bedrooms })}
+                        </Typography>
+                      )}
+                      {apartment.bathrooms && (
+                        <Typography variant="body2" color="text.secondary">
+                          {t('apartments:card.bath', '{{count}} bathroom', { count: apartment.bathrooms })}
+                        </Typography>
+                      )}
+                      {apartment.size && (
+                        <Typography variant="body2" color="text.secondary">
+                          {apartment.size} {apartment.sizeUnit || 'm²'}
+                        </Typography>
+                      )}
+                    </Box>
+                  )}
+                  
+                  <Box sx={{ display: 'flex', flexDirection: 'column', mt: 'auto', pt: 2 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
+                      <Typography variant="h6" color="primary">
+                        <PriceFormatter amount={apartment.rent} />
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {t('apartments:card.per_month', '/month')}
+                      </Typography>
+                    </Box>
+                  </Box>
                 </CardContent>
                 <CardActions>
-                  <Button size="small">
-                    {t('common:actions.view_details', 'View Details')}
-                  </Button>
                   <Button size="small" color="primary">
-                    {t('apartments:actions.manage', 'Manage')}
+                    {t('common:actions.view_details', 'View Details')}
                   </Button>
                 </CardActions>
               </Card>
@@ -249,6 +384,29 @@ const Apartments = () => {
           ))}
         </Grid>
       )}
+
+      {/* Apartment Form Dialog */}
+      <ApartmentForm 
+        open={formOpen}
+        onClose={handleCloseForm}
+        onSave={handleSaveApartment}
+      />
+
+      {/* Success/Error Snackbar */}
+      <Snackbar 
+        open={snackbar.open} 
+        autoHideDuration={6000} 
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert 
+          onClose={handleCloseSnackbar} 
+          severity={snackbar.severity}
+          sx={{ width: '100%' }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

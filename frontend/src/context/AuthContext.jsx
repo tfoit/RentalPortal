@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import logger from '../utils/logger';
+import api, { authAPI } from '../services/api';
 
 const AuthContext = createContext();
 
@@ -23,6 +24,20 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
+  // Listen for auth:logout events from the API service
+  useEffect(() => {
+    const handleLogout = () => {
+      logger.info('Received auth:logout event');
+      logout();
+    };
+    
+    window.addEventListener('auth:logout', handleLogout);
+    
+    return () => {
+      window.removeEventListener('auth:logout', handleLogout);
+    };
+  }, []);
+
   // Check authentication status - made into a useCallback to prevent dependency issues
   const checkAuthStatus = useCallback(async () => {
     if (!token) {
@@ -33,42 +48,38 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
-      logger.info('Verifying authentication token');
-      // In a real app, you would make an API call to verify the token and get user data
-      // For example: const response = await axios.get('/api/users/me');
+      logger.info('Verifying authentication token', { tokenExists: !!token });
+      // Log the current authorization header for debugging
+      logger.debug('Current authorization header', { 
+        authHeader: axios.defaults.headers.common['Authorization'] ? 'Set' : 'Not set' 
+      });
       
-      // For now, we'll simulate a successful auth check
-      const mockUser = {
-        id: '1',
-        username: 'testuser',
-        email: 'test@example.com',
-        role: 'user',
-        firstName: 'Test',
-        lastName: 'User',
-        phone: '+1234567890',
-        address: '123 Main St',
-        city: 'Berlin',
-        country: 'Germany',
-        postalCode: '10115',
-        profileImage: '',
-        bio: 'I am a test user',
-        privacySettings: {
-          allowContactFromOtherUsers: true,
-          showContactInfo: false,
-          showActivity: true,
-          profileVisibility: 'public'
-        }
-      };
+      // Use the api service to verify the token and get user data
+      const response = await authAPI.getCurrentUser();
+      const userData = response.data;
       
-      logger.info('User authenticated successfully', { userId: mockUser.id, role: mockUser.role });
-      setUser(mockUser);
+      logger.info('User authenticated successfully', { 
+        userId: userData.id || userData._id, 
+        role: userData.role 
+      });
+      setUser(userData);
       setLoading(false);
       return true;
     } catch (error) {
-      logger.error('Authentication check failed', { error: error.message });
-      console.error('Auth check failed:', error);
-      logout(); // Clear invalid token
-      setError('Session expired. Please login again.');
+      logger.error('Authentication check failed', { 
+        error: error.message,
+        status: error.response?.status,
+        headers: error.response?.headers,
+        data: error.response?.data 
+      });
+      
+      // Only logout if it's an authentication error (401/403)
+      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+        logger.warn('Authentication token invalid, logging out user');
+        logout(); // Clear invalid token
+        setError('Session expired. Please login again.');
+      }
+      
       setLoading(false);
       return false;
     }
@@ -86,48 +97,31 @@ export const AuthProvider = ({ children }) => {
       
       logger.info('User login attempt', { email: credentials.email });
       
-      // In a real app, replace this with an actual API call
-      // const response = await axios.post('/api/users/login', credentials);
-      // const { token, user } = response.data;
+      // Use the api service to login
+      const response = await authAPI.login(credentials);
+      const { token, user } = response.data;
       
-      // Mock response for now
-      const mockToken = 'mock-jwt-token';
-      const mockUser = {
-        id: '1',
-        username: credentials.email.split('@')[0],
-        email: credentials.email,
-        role: 'user',
-        firstName: 'Test',
-        lastName: 'User',
-        phone: '+1234567890',
-        address: '123 Main St',
-        city: 'Berlin',
-        country: 'Germany',
-        postalCode: '10115',
-        profileImage: '',
-        bio: 'I am a test user',
-        privacySettings: {
-          allowContactFromOtherUsers: true,
-          showContactInfo: false,
-          showActivity: true,
-          profileVisibility: 'public'
-        }
-      };
-
-      // Store token and update state in proper sequence
-      localStorage.setItem('token', mockToken);
-      setToken(mockToken);
-      setUser(mockUser); // This ensures user is set before navigation happens
+      // Store token and update state
+      localStorage.setItem('token', token);
+      
+      // Explicitly set the Authorization header immediately to prevent race conditions
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      
+      setToken(token);
+      setUser(user);
       
       logger.info('User logged in successfully', { 
-        userId: mockUser.id, 
-        username: mockUser.username, 
-        role: mockUser.role 
+        userId: user.id || user._id, 
+        username: user.username, 
+        role: user.role 
       });
+      
+      // Verify the authentication immediately after login, before redirecting
+      await checkAuthStatus();
       
       setLoading(false);
       
-      return { success: true, user: mockUser };
+      return { success: true, user };
     } catch (error) {
       logger.error('Login failed', { 
         email: credentials.email, 
@@ -152,16 +146,16 @@ export const AuthProvider = ({ children }) => {
         username: userData.username
       });
       
-      // In a real app, replace this with an actual API call
-      // const response = await axios.post('/api/users/register', userData);
-      // const { message } = response.data;
+      // Use the api service to register
+      const response = await authAPI.register(userData);
+      const { message } = response.data;
       
       logger.info('User registered successfully', { 
         email: userData.email,
         username: userData.username
       });
       
-      return { success: true, message: 'Registration successful! Please login.' };
+      return { success: true, message: message || 'Registration successful! Please login.' };
     } catch (error) {
       logger.error('Registration failed', { 
         email: userData.email, 
@@ -184,22 +178,16 @@ export const AuthProvider = ({ children }) => {
       setError(null);
       
       logger.info('Profile update attempt', { 
-        userId: user?.id,
+        userId: user?.id || user?._id,
         fields: Object.keys(profileData)
       });
       
-      // In a real app, replace this with an actual API call
-      // const response = await axios.put('/api/users/profile', profileData);
-      // const { user: updatedUser } = response.data;
-      
-      // For now, we'll simulate a successful profile update
-      const updatedUser = {
-        ...user,
-        ...profileData
-      };
+      // Use the api service to update profile
+      const response = await authAPI.updateProfile(profileData);
+      const { user: updatedUser } = response.data;
       
       logger.info('Profile updated successfully', { 
-        userId: updatedUser.id,
+        userId: updatedUser.id || updatedUser._id,
         fields: Object.keys(profileData)
       });
       
@@ -208,7 +196,7 @@ export const AuthProvider = ({ children }) => {
       return { success: true, user: updatedUser };
     } catch (error) {
       logger.error('Profile update failed', { 
-        userId: user?.id,
+        userId: user?.id || user?._id,
         error: error.message,
         response: error.response?.data
       });
@@ -226,25 +214,16 @@ export const AuthProvider = ({ children }) => {
       setError(null);
       
       logger.info('Privacy settings update attempt', { 
-        userId: user?.id,
+        userId: user?.id || user?._id,
         settings: privacySettings
       });
       
-      // In a real app, replace this with an actual API call
-      // const response = await axios.put('/api/users/privacy', privacySettings);
-      // const { user: updatedUser } = response.data;
-      
-      // For now, we'll simulate a successful privacy settings update
-      const updatedUser = {
-        ...user,
-        privacySettings: {
-          ...user.privacySettings,
-          ...privacySettings
-        }
-      };
+      // Use the api service to update privacy settings
+      const response = await api.put('/users/privacy', privacySettings);
+      const { user: updatedUser } = response.data;
       
       logger.info('Privacy settings updated successfully', { 
-        userId: updatedUser.id,
+        userId: updatedUser.id || updatedUser._id,
         settings: privacySettings
       });
       
@@ -253,7 +232,7 @@ export const AuthProvider = ({ children }) => {
       return { success: true, user: updatedUser };
     } catch (error) {
       logger.error('Privacy settings update failed', { 
-        userId: user?.id,
+        userId: user?.id || user?._id,
         error: error.message,
         response: error.response?.data
       });
@@ -266,11 +245,13 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    logger.info('User logged out', { userId: user?.id });
+    logger.info('User logging out');
     localStorage.removeItem('token');
+    // Explicitly clear the Authorization header
+    delete axios.defaults.headers.common['Authorization'];
     setToken(null);
     setUser(null);
-    delete axios.defaults.headers.common['Authorization'];
+    logger.info('User logged out successfully');
   };
 
   const value = {
