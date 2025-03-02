@@ -30,6 +30,11 @@ export const uploadFile = async (file) => {
 // Get file by ID
 export const getFileById = async (id) => {
   try {
+    // Validate ID parameter
+    if (!id) {
+      throw new Error("Invalid file ID: ID cannot be null or undefined");
+    }
+
     const response = await fetch(`${FILE_API_URL}/${id}`, {
       method: "GET",
       headers: {
@@ -50,5 +55,11 @@ export const getFileById = async (id) => {
 
 // Get file URL
 export const getFileUrl = (id) => {
+  // Validate ID parameter
+  if (!id) {
+    console.error("Invalid file ID: ID cannot be null or undefined");
+    return null; // or return a default/placeholder URL
+  }
+
   return `${FILE_API_URL}/${id}`;
 };
